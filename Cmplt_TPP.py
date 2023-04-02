@@ -427,65 +427,66 @@ def main():
 
       
 if __name__ == "__main__":
-    
-    print(Style.BRIGHT+Fore.MAGENTA)
-    shop_count = int(input("\nEnter number of shops : "))
-    initital_popSize = 20
-    
-    availability = [(random.randint(1, 8) * 100) for i in range(shop_count-1)]
-    availability.insert(0, 0)
-    print("Availability : ",availability)
-    print("Total available content : ",sum(availability))
-    
-    while 1:
-        print("Requirement should be less than", sum(availability)/2)
-        require =  int(input("Enter your requirement : "))
-        if require < sum(availability)/2 :
-            break
-        else:
-            continue
+    while True:    
+        print(Style.BRIGHT+Fore.MAGENTA)
+        shop_count = int(input("\nEnter number of shops : "))
+        initital_popSize = 20
         
-    eliteRate = 0.2             # first 20% from the initial population is taken in mating pool just the way it was
-    probOfCrossOver = 0.5
-    mutationRate = 0.1
-    generation = int(input("\nUpto how many generations you want to run : "))
-    bestFitness, unsortedBestFitness = [], []
-    travelling_cost = 5
-    
-    for i in range(generation):
-        gen_no = i+1
-        costPerUnit = [random.randint(10, 15) for i in range(shop_count-1)]
-        costPerUnit.insert(0, 0)
-        if i == 0:
-            main() 
-        elif i > 0:
-            print(Style.BRIGHT+Fore.YELLOW)
-            print(str(i+1).center(shutil.get_terminal_size().columns,'_'))
-            print("\n", gen_no , "\b) Gen : ")     
+        availability = [(random.randint(1, 8) * 100) for i in range(shop_count-1)]
+        availability.insert(0, 0)
+        print("Availability : ",availability)
+        print("Total available content : ",sum(availability))
+        
+        while 1:
+            print("Requirement should be less than", sum(availability)/2)
+            require =  int(input("Enter your requirement : "))
+            if require < sum(availability)/2 :
+                break
+            else:
+                continue
             
-            for i in range(len(order_quantity_per_shop)): 
-                order_quantity_per_shop[i].pop(0)
-            Ordered_quantity = order_quantity_per_shop
-            
-            Crossover(organisedListOfMutate, probOfCrossOver)
-            Mutation(children, gen_no)
-            
-            bestFitness.append(mutationFitness[0])
-            unsortedBestFitness.append(mutationFitness[0])
+        eliteRate = 0.2             # first 20% from the initial population is taken in mating pool just the way it was
+        probOfCrossOver = 0.5
+        mutationRate = 0.1
+        generation = int(input("\nUpto how many generations you want to run : "))
+        bestFitness, unsortedBestFitness = [], []
+        travelling_cost = 5
+        
+        for i in range(generation):
+            gen_no = i+1
+            costPerUnit = [random.randint(10, 15) for i in range(shop_count-1)]
+            costPerUnit.insert(0, 0)
+            if i == 0:
+                main() 
+            elif i > 0:
+                print(Style.BRIGHT+Fore.YELLOW)
+                print(str(i+1).center(shutil.get_terminal_size().columns,'_'))       
+                print("\n", gen_no , "\b) Gen : ")     
+                
+                for i in range(len(order_quantity_per_shop)): 
+                    order_quantity_per_shop[i].pop(0)
+                Ordered_quantity = order_quantity_per_shop
+                
+                Crossover(organisedListOfMutate, probOfCrossOver)
+                Mutation(children, gen_no)
+                
+                bestFitness.append(mutationFitness[0])
+                unsortedBestFitness.append(mutationFitness[0])
 
-    print("\nFitness List : ", Style.BRIGHT+Fore.MAGENTA, bestFitness)
-    bestFitness.sort()
-    overallBestFitness = bestFitness[0]
-    bestGen = unsortedBestFitness.index(overallBestFitness)
-    
-    print(Style.BRIGHT,Fore.BLUE,"\nGeneration no",Fore.RED,bestGen+2,Style.BRIGHT,Fore.BLUE,"generates the optimal fitness value, that is :",Fore.RED, overallBestFitness)
-    
-    print(Fore.CYAN,"\033[1m","\n\n","\033[4m","HURRAH!!!!!!!!, Eureka Eureka, WE DID IT","\033[0m","😘😘😘😘😎😎😎😎🔥🔥🔥🔥🤩🤩🤩🤩")  
+        print("\nFitness List : ", Style.BRIGHT+Fore.MAGENTA, bestFitness)
+        bestFitness.sort()
+        overallBestFitness = bestFitness[0]
+        bestGen = unsortedBestFitness.index(overallBestFitness)
+        
+        print(Style.BRIGHT,Fore.BLUE,"\nGeneration no",Fore.RED,bestGen+2,Style.BRIGHT,Fore.BLUE,"generates the optimal fitness value, that is :",Fore.RED, overallBestFitness)
+        
+        print(Fore.CYAN,"\033[1m","\n\n","\033[4m","HURRAH!!!!!!!!, Eureka Eureka, WE DID IT","\033[0m","😘😘😘😘😎😎😎😎🔥🔥🔥🔥🤩🤩🤩🤩")  
+        print("\n\n")
 
-a = input("press any alphabet to continue or any digit to exit : ")
-if a.isalpha() == True:
-    print("Alphabet: ",a) 
-elif a.isdigit() == True:
-    print("Digit: ",a)
-elif a.isalnum() == True:
-    print("Alpha_Numeric: ",a)
+        print(Style.BRIGHT+Fore.GREEN)
+        user_input = input("Enter alphabet to continue or anything to exit: ")
+        if user_input.isalpha():
+            continue
+        else:
+            print("Exiting..........")
+            break
